@@ -37,3 +37,23 @@
 </body>
 
 </html>
+
+
+<form class="pedido" method="POST" action="/agendamento">
+    <label class="rotulo">Nome</label>
+    <input type="text" name="clienteAg" class="campo-texto" required>
+
+    <label class="rotulo">E-mail</label>
+    <input type="email" name="emailAg" class="campo-texto" required>
+
+    <label class="rotulo">Selecione o tipo de veículo</label>
+    <select name="veiculoAg" class="campo-texto" required>
+        <option value="1">Básico</option>
+        <option value="2">Família</option>
+        <option value="3">Luxo</option>
+    </select>
+
+    <button type="submit" class="botao-reservar">
+        FAZER MINHA RESERVA
+    </button>
+</form>

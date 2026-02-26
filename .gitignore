@@ -1,0 +1,37 @@
+# Dependências
+node_modules/
+jspm_packages/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variáveis de Ambiente (SEGURANÇA!)
+.env
+.env.test
+.env.production
+.env.local
+
+# Build e Saída
+dist/
+build/
+out/
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Testes e Cobertura
+coverage/
+.nyc_output
+
+# Cache
+.eslintcache
+.npm
+.cache
