@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora de Veículos</title>
+    <link rel="stylesheet" href="../estilo.css">
+</head>
+
+<body>
+    <main class="tudo">
+        <div id="col1">
+            <img src="../imagens/icone.png" alt="ícone de caminhão">
+            <h2 class="titulo">Encontre o veículo certo para você!</h2>
+            <p class="texto">Preencha as informações abaixo</p>
+
+            <form id="form-agendamento" class="pedido">
+                <label class="rotulo">Nome</label>
+                <input id="nome" type="text" class="campo-texto">
+
+                <label class="rotulo">E-mail</label>
+                <input id="email" type="text" class="campo-texto">
+
+                <label class="rotulo">Selecione o tipo de veículo</label>
+                <select id="veiculo" class="campo-texto">
+                    <option value="">Carregando opções...</option>
+                </select>
+
+                <button type="button" id="btn-reservar" class="botao-reservar">FAZER MINHA RESERVA</button>
+            </form>
+
+        </div>
+        <div id="col2">
+            <h1 class="oferta">VOCÊ PODE ALUGAR ESSE VEÍCULO POR R$ <strong class="destaque">99</strong> / DIA</h1>
+            <p class="texto-oferta">Válido para todo território nacional</p>
+            <div><img src="../imagens/renault-kwid.png" alt="Renault Kwid"></div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

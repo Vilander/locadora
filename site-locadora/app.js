@@ -1,63 +1,53 @@
-function fnAlterarFoto() {
-  if (foto.value != "") {
-    document.getElementById("fundo-imagem").style.backgroundImage =
-      `url('${foto.value}')`;
-  } else {
-    document.getElementById("fundo-imagem").style.backgroundImage =
-      `url('https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`;
-  }
-  console.log(foto.value);
+// 1. Busca os veículos no banco e preenche o <select>
+function fnCarregarVeiculos() {
+  fetch("http://localhost:3000/veiculos")
+    .then((resposta) => resposta.json())
+    .then((dados) => {
+      let select = document.getElementById("veiculo");
+
+      select.innerHTML = '<option value="">Selecione o veículo...</option>';
+
+      dados.forEach((veiculo) => {
+        select.innerHTML += `<option value="${veiculo.idVeic}">${veiculo.categoriaVeic} - ${veiculo.modeloVeic}</option>`;
+      });
+    })
+    .catch((erro) => console.log("Erro ao carregar veículos: " + erro.message));
 }
 
-function fnLimparCampos() {
-  document.getElementById("form-produtos").reset();
-}
-
-//========================toast===================================//
-
-function fnMensagemSalvar() {
-  let toastElList = [].slice.call(document.querySelectorAll(".toast"));
-  let toastList = toastElList.map(function (toastEl) {
-    return new bootstrap.Toast(toastEl);
-  });
-  toastList.forEach((toast) => toast.show());
-}
-
-//===================////===================////===================//
-
-function fnCadastrarProdutos() {
+function fnFazerReserva() {
   let formDados = {
-    titulo: document.getElementById("titulo").value,
-    preco: document.getElementById("preco").value,
-    descricao: document.getElementById("descricao").value,
-    avaliacao: document.getElementById("avaliacao").value,
-    foto: document.getElementById("foto").value,
-    categoria: document.getElementById("categoria").value,
+    clienteAg: document.getElementById("nome").value,
+    emailAg: document.getElementById("email").value,
+    veiculoAg: document.getElementById("veiculo").value,
   };
 
-  //console.dir(formDados)
+  if (
+    formDados.clienteAg == "" ||
+    formDados.emailAg == "" ||
+    formDados.veiculoAg == ""
+  ) {
+    alert("Por favor, preencha todos os campos!");
+    return;
+  }
 
-  fetch("http://localhost:3000/produto/", {
+  fetch("http://localhost:3000/agendamento/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formDados),
   })
     .then((resposta) => resposta.json())
     .then((dados) => {
-      fnLimparCampos();
-      console.log(dados);
-      fnMensagemSalvar();
+      alert("Reserva realizada com sucesso!");
+      document.getElementById("form-agendamento").reset(); // Limpa o formulário
     })
-    .catch((erro) => console.log(erro.message));
+    .catch((erro) => console.log("Erro ao salvar: " + erro.message));
 }
 
-let foto = document.getElementById("foto");
-let btn_salvar = document.getElementById("btn-salvar-produto");
-
-foto.addEventListener("blur", function () {
-  fnAlterarFoto();
+document.addEventListener("DOMContentLoaded", () => {
+  fnCarregarVeiculos();
 });
 
-btn_salvar.addEventListener("click", () => {
-  fnCadastrarProdutos();
+let btnReservar = document.getElementById("btn-reservar");
+btnReservar.addEventListener("click", () => {
+  fnFazerReserva();
 });

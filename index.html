@@ -14,19 +14,22 @@
             <img src="imagens/icone.png" alt="ícone de caminhão">
             <h2 class="titulo">Encontre o veículo certo para você!</h2>
             <p class="texto">Preencha as informações abaixo</p>
-            <form class="pedido">
+
+            <form id="form-agendamento" class="pedido">
                 <label class="rotulo">Nome</label>
                 <input id="nome" type="text" class="campo-texto">
+
                 <label class="rotulo">E-mail</label>
                 <input id="email" type="text" class="campo-texto">
+
                 <label class="rotulo">Selecione o tipo de veículo</label>
                 <select id="veiculo" class="campo-texto">
-                    <option>Básico</option>
-                    <option>Família</option>
-                    <option>Luxo</option>
+                    <option value="">Carregando opções...</option>
                 </select>
-                <button class="botao-reservar">FAZER MINHA RESERVA</button>
+
+                <button type="button" id="btn-reservar" class="botao-reservar">FAZER MINHA RESERVA</button>
             </form>
+
         </div>
         <div id="col2">
             <h1 class="oferta">VOCÊ PODE ALUGAR ESSE VEÍCULO POR R$ <strong class="destaque">99</strong> / DIA</h1>
@@ -34,26 +37,8 @@
             <div><img src="imagens/renault-kwid.png" alt="Renault Kwid"></div>
         </div>
     </main>
+
+    <script src="app.js"></script>
 </body>
 
 </html>
-
-
-<form class="pedido" method="POST" action="/agendamento">
-    <label class="rotulo">Nome</label>
-    <input type="text" name="clienteAg" class="campo-texto" required>
-
-    <label class="rotulo">E-mail</label>
-    <input type="email" name="emailAg" class="campo-texto" required>
-
-    <label class="rotulo">Selecione o tipo de veículo</label>
-    <select name="veiculoAg" class="campo-texto" required>
-        <option value="1">Básico</option>
-        <option value="2">Família</option>
-        <option value="3">Luxo</option>
-    </select>
-
-    <button type="submit" class="botao-reservar">
-        FAZER MINHA RESERVA
-    </button>
-</form>

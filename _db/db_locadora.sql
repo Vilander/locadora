@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 26/02/2026 às 01:48
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 26/02/2026 às 22:41
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -32,8 +32,18 @@ CREATE TABLE `rac_agendamento` (
   `clienteAg` varchar(100) NOT NULL,
   `emailAg` varchar(30) NOT NULL,
   `veiculoAg` int(11) NOT NULL,
-  `dataAg` datetime NOT NULL
+  `dataAg` datetime NOT NULL,
+  `status` int(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `rac_agendamento`
+--
+
+INSERT INTO `rac_agendamento` (`idAg`, `clienteAg`, `emailAg`, `veiculoAg`, `dataAg`, `status`) VALUES
+(1, 'Carlos Silva', 'carlos@email.com', 1, '2026-03-10 09:00:00', 1),
+(2, 'Fernanda Souza', 'fernanda@email.com', 2, '2026-03-12 14:30:00', 1),
+(3, 'Ricardo Lima', 'ricardo@email.com', 3, '2026-03-15 08:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -49,6 +59,15 @@ CREATE TABLE `rac_usuarios` (
   `nivelAcessoUsu` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `rac_usuarios`
+--
+
+INSERT INTO `rac_usuarios` (`idUsu`, `nomeUsu`, `loginUsu`, `senhaUsu`, `nivelAcessoUsu`) VALUES
+(1, 'Administrador', 'admin', '$2b$10$hashadminexemplo', 1),
+(2, 'Funcionário João', 'joao', '$2b$10$hashjoaoexemplo', 2),
+(3, 'Funcionária Maria', 'maria', '$2b$10$hashmariaexemplo', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +82,15 @@ CREATE TABLE `rac_veiculos` (
   `categoriaVeic` varchar(50) NOT NULL,
   `diariaVeic` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `rac_veiculos`
+--
+
+INSERT INTO `rac_veiculos` (`idVeic`, `modeloVeic`, `marcaVeic`, `placaVeic`, `categoriaVeic`, `diariaVeic`) VALUES
+(1, 'Onix', 'Chevrolet', 'ABC1A23', 'Básico', 120),
+(2, 'Corolla', 'Toyota', 'DEF4B56', 'Família', 220),
+(3, 'BMW 320i', 'BMW', 'GHI7C89', 'Luxo', 450);
 
 --
 -- Índices para tabelas despejadas
@@ -95,19 +123,19 @@ ALTER TABLE `rac_veiculos`
 -- AUTO_INCREMENT de tabela `rac_agendamento`
 --
 ALTER TABLE `rac_agendamento`
-  MODIFY `idAg` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `rac_usuarios`
 --
 ALTER TABLE `rac_usuarios`
-  MODIFY `idUsu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `rac_veiculos`
 --
 ALTER TABLE `rac_veiculos`
-  MODIFY `idVeic` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idVeic` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para tabelas despejadas
