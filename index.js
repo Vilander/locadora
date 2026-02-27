@@ -27,7 +27,7 @@ conexao.connect(function (erro) {
 });
 
 // 1. ROTA PARA BUSCAR OS VEÍCULOS (Para preencher o Select)
-app.get("/veiculos", function (req, res) {
+app.get("/site-locadora/home", function (req, res) {
   conexao.query("SELECT * FROM rac_veiculos", function (erro, lista_veiculos) {
     if (erro) {
       res.json(erro);
@@ -38,7 +38,7 @@ app.get("/veiculos", function (req, res) {
 });
 
 // 2. ROTA PARA SALVAR O AGENDAMENTO (Formulário)
-app.post("/agendamento/", function (req, res) {
+app.post("/site-locadora/agendamento/", function (req, res) {
   const data = req.body;
 
   // Data e hora atual do servidor para salvar no banco

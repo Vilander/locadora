@@ -1,6 +1,6 @@
 // 1. Busca os veículos no banco e preenche o <select>
 function fnCarregarVeiculos() {
-  fetch("http://localhost:3000/veiculos")
+  fetch("http://localhost:3000/site-locadora/home")
     .then((resposta) => resposta.json())
     .then((dados) => {
       let select = document.getElementById("veiculo");
@@ -30,7 +30,7 @@ function fnFazerReserva() {
     return;
   }
 
-  fetch("http://localhost:3000/agendamento/", {
+  fetch("http://localhost:3000/site-locadora/agendamento/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formDados),
