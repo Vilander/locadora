@@ -57,6 +57,30 @@ app.post("/site-locadora/agendamento/", function (req, res) {
   );
 });
 
+//3. ROTA PARA BUSCAR OS VEÍCULOS (Showroom)
+app.get("/site-locadora/showroom", function (req, res) {
+  const categoria = req.query.categoria;
+
+  let sql = "SELECT * FROM rac_veiculos";
+  let parametros = [];
+
+  if (categoria && categoria !== "todas") {
+    sql += " WHERE categoriaVeic = ?";
+    parametros.push(categoria);
+  }
+
+  conexao.query(sql, parametros, function (erro, lista_veiculos) {
+    if (erro) {
+      console.error("Erro ao buscar veículos para o showroom:", erro);
+      res
+        .status(500)
+        .json({ erro: "Erro interno no servidor ao buscar veículos." });
+    } else {
+      res.json(lista_veiculos);
+    }
+  });
+});
+
 app.listen(3000, () => {
   console.log("Servidor rodando na porta 3000");
 });

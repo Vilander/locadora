@@ -1,77 +1,60 @@
-function fnMontarCardProduto(produto) {
+function fnMontarCardVeiculo(veiculo) {
+  const imagem =
+    veiculo.fotoVeic !== ""
+      ? veiculo.fotoVeic
+      : "https://via.placeholder.com/300x200?text=Sem+Foto";
+
   let cartao = `
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3">
-                <div class="card">
-                    <img src="${produto.foto}"
-                        class="card-img-top" alt="${produto.nome}">
-                    <div class="card-body">
-                        <h5 class="card-title">${produto.titulo}</h5>
-                        <p class="card-text">${produto.descricao}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="h5 mb-0">R$ ${produto.preco}</span>
-                            <div>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star text-warning"></i>
-                                <small class="text-muted">(${produto.avaliacao})</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between bg-light">
-                        <button class="btn btn-primary btn-sm">Comprar</button>
-                        <button class="btn btn-outline-secondary btn-sm"><i class="bi bi-heart"></i></button>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="${imagem}" class="card-img-top" alt="${veiculo.modeloVeic}">
+                <div class="card-body">
+                    <h5 class="card-title">${veiculo.marcaVeic} ${veiculo.modeloVeic}</h5>
+                    <p class="card-text text-muted">
+                        <i class="bi bi-tag"></i> Categoria: ${veiculo.categoriaVeic} <br>
+                        <i class="bi bi-card-text"></i> Placa: ${veiculo.placaVeic}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="h4 text-success mb-0">R$ ${veiculo.diariaVeic}<small class="fs-6 text-muted">/dia</small></span>
                     </div>
                 </div>
+                <div class="card-footer d-flex justify-content-between bg-white border-top-0 pb-3">
+                    <button class="btn btn-primary w-100">Alugar Agora</button>
+                </div>
             </div>
-    `;
-  document.querySelector(".lista-produtos").innerHTML += cartao;
-}
-
-function fnMontarOrdem(produto) {
-  let ordem_produto = `
-        <div class="ordenarPor">
-            <select onchange="selectOrdem(this.value)" class="form-select" id="sortSelect" aria-label="Default select example">
-                <option selected disabled>Ordenar por:</option>
-                <option value="produtos.html?categoria=${produto.categoria}&ordem=preco">Preço</option>
-                <option value="produtos.html?categoria=${produto.categoria}&ordem=titulo">Título</option>
-            </select>
         </div>
     `;
-  document.querySelector("#ordemProduto").innerHTML = ordem_produto;
+
+  document.querySelector("#lista-veiculos").innerHTML += cartao;
 }
 
-function selectOrdem(url) {
-  window.location.href = url;
-}
+function fnCarregarDados(categoria = "todas") {
+  document.querySelector("#lista-veiculos").innerHTML = "";
 
-function fnCarregarDados() {
-  const parametros = new URLSearchParams(window.location.search);
-  const existeCategoria = parametros.has("categoria");
-  const existeOrdem = parametros.has("ordem");
+  let url = "http://localhost:3000/site-locadora/showroom";
 
-  let rotaCategoria = "";
-  if (existeCategoria) {
-    rotaCategoria = parametros.get("categoria") + "/";
+  if (categoria !== "todas") {
+    url += `?categoria=${categoria}`;
   }
 
-  let rotaOrdem = "";
-  if (existeOrdem) {
-    rotaOrdem = parametros.get("ordem") + "/";
-  }
-
-  fetch("http://localhost:3000/produtos/" + rotaCategoria + rotaOrdem, {
+  fetch(url, {
     method: "GET",
   })
     .then((response) => response.json())
-    .then((produtos) => {
-      produtos.forEach((produto) => {
-        fnMontarCardProduto(produto);
-        fnMontarOrdem(produto);
+    .then((veiculos) => {
+      veiculos.forEach((veiculo) => {
+        fnMontarCardVeiculo(veiculo);
       });
     })
-    .catch((erro) => console.log(erro.message));
+    .catch((erro) => {
+      console.log("Erro na requisição:", erro.message);
+      document.querySelector("#lista-veiculos").innerHTML =
+        `<div class="alert alert-danger w-100">Não foi possível carregar os veículos.</div>`;
+    });
+}
+
+function fnFiltrarCategoria(categoria) {
+  fnCarregarDados(categoria);
 }
 
 fnCarregarDados();
