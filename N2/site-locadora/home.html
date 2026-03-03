@@ -13,19 +13,21 @@
 <body>
   <header>
     <nav class="navbar">
-      <form id="nav-menu" class="container-fluid justify-content-start">
-        <button class="btn btn-outline-success me-2" type="button">
-          Login
-        </button>
-        <!-- <button class="btn btn-sm btn-outline-secondary" type="button">Consultar veiculos</button> -->
-        <button class="btn btn-outline-secondary" type="button">
-          Nossas lojas
-        </button>
+      <div id="nav-menu" class="container-fluid justify-content-start">
+        <a href="login.html">
+          <button class="btn btn-outline-success me-2" type="button">Login</button>
+        </a>
+
+        <button class="btn btn-outline-secondary me-2" type="button">Nossas lojas</button>
+
         <a href="showroom.html">
-          <button class="btn btn-outline-secondary" type="button">Nossos veículos</button></a>
+          <button class="btn btn-outline-secondary me-2" type="button">Nossos veículos</button>
+        </a>
+
         <a href="home.html">
-          <button class="btn btn-outline-secondary" type="button">Início</button></a>
-      </form>
+          <button class="btn btn-outline-secondary" type="button">Início</button>
+        </a>
+      </div>
     </nav>
   </header>
   <main class="tudo">
@@ -57,7 +59,7 @@
         <strong class="destaque">99</strong>* / DIA
       </h1>
       <p class="texto-oferta">Válido para todo território nacional</p>
-      <p  class="texto-rodape">*consulte as condições de aluguel no site</p>
+      <p class="texto-rodape">*consulte as condições de aluguel no site</p>
       <div><img src="../imagens/renault-kwid.png" alt="Renault Kwid" /></div>
     </div>
   </main>
@@ -66,6 +68,20 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const logado = localStorage.getItem("logado");
+      if (logado === "true") {
+        const btnLogin = document.querySelector(".btn-outline-success");
+        if (btnLogin) {
+          btnLogin.innerText = "Área Adm";
+          btnLogin.parentElement.href = "usuarios.html"; // Muda o link para a área restrita
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>

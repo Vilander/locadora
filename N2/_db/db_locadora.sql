@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 28/02/2026 às 01:06
+-- Tempo de geração: 03/03/2026 às 23:07
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -49,13 +49,33 @@ INSERT INTO `rac_agendamento` (`idAg`, `clienteAg`, `emailAg`, `veiculoAg`, `dat
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `rac_niveis`
+--
+
+CREATE TABLE `rac_niveis` (
+  `idNivel` int(11) NOT NULL,
+  `nomeNivel` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `rac_niveis`
+--
+
+INSERT INTO `rac_niveis` (`idNivel`, `nomeNivel`) VALUES
+(1, 'Administrador'),
+(2, 'Funcionário'),
+(3, 'Cliente');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `rac_usuarios`
 --
 
 CREATE TABLE `rac_usuarios` (
   `idUsu` int(11) NOT NULL,
   `nomeUsu` varchar(100) NOT NULL,
-  `loginUsu` varchar(50) NOT NULL,
+  `emailUsu` varchar(50) NOT NULL,
   `senhaUsu` varchar(255) NOT NULL,
   `nivelAcessoUsu` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -64,10 +84,8 @@ CREATE TABLE `rac_usuarios` (
 -- Despejando dados para a tabela `rac_usuarios`
 --
 
-INSERT INTO `rac_usuarios` (`idUsu`, `nomeUsu`, `loginUsu`, `senhaUsu`, `nivelAcessoUsu`) VALUES
-(1, 'Administrador', 'admin', '$2b$10$hashadminexemplo', 1),
-(2, 'Funcionário João', 'joao', '$2b$10$hashjoaoexemplo', 2),
-(3, 'Funcionária Maria', 'maria', '$2b$10$hashmariaexemplo', 2);
+INSERT INTO `rac_usuarios` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `nivelAcessoUsu`) VALUES
+(1, 'Administrador', 'admin@admin.com', '$2a$12$NWX7UKteZWlEhqVypk0jV.Pm4QKeQO6puGe.RMZqTRxpxmpbCNEBO', 1);
 
 -- --------------------------------------------------------
 
@@ -106,10 +124,17 @@ ALTER TABLE `rac_agendamento`
   ADD KEY `fk_agendamento_veiculo` (`veiculoAg`);
 
 --
+-- Índices de tabela `rac_niveis`
+--
+ALTER TABLE `rac_niveis`
+  ADD PRIMARY KEY (`idNivel`);
+
+--
 -- Índices de tabela `rac_usuarios`
 --
 ALTER TABLE `rac_usuarios`
-  ADD PRIMARY KEY (`idUsu`);
+  ADD PRIMARY KEY (`idUsu`),
+  ADD KEY `fk_nivel` (`nivelAcessoUsu`);
 
 --
 -- Índices de tabela `rac_veiculos`
@@ -127,6 +152,12 @@ ALTER TABLE `rac_veiculos`
 --
 ALTER TABLE `rac_agendamento`
   MODIFY `idAg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `rac_niveis`
+--
+ALTER TABLE `rac_niveis`
+  MODIFY `idNivel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `rac_usuarios`
@@ -149,6 +180,12 @@ ALTER TABLE `rac_veiculos`
 --
 ALTER TABLE `rac_agendamento`
   ADD CONSTRAINT `fk_agendamento_veiculo` FOREIGN KEY (`veiculoAg`) REFERENCES `rac_veiculos` (`idVeic`) ON UPDATE CASCADE;
+
+--
+-- Restrições para tabelas `rac_usuarios`
+--
+ALTER TABLE `rac_usuarios`
+  ADD CONSTRAINT `fk_nivel` FOREIGN KEY (`nivelAcessoUsu`) REFERENCES `rac_niveis` (`idNivel`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

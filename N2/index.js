@@ -81,6 +81,75 @@ app.get("/site-locadora/showroom", function (req, res) {
   });
 });
 
+//login
+
+// ROTA DE LOGIN (User Story 4)
+app.post("/login", function (req, res) {
+  const { email, senha } = req.body; // Recebe 'email' do frontend
+
+  const sql = "SELECT * FROM rac_usuarios WHERE emailUsu = ?"; // Usa emailUsu
+  conexao.query(sql, [email], async function (erro, resultados) {
+    if (erro) return res.status(500).json(erro);
+
+    if (resultados.length > 0) {
+      const usuario = resultados[0];
+      const senhaValida = await bcrypt.compare(senha, usuario.senhaUsu);
+
+      if (senhaValida) {
+        res.status(200).json({
+          id: usuario.idUsu,
+          nome: usuario.nomeUsu,
+          nivel: usuario.nivelAcessoUsu,
+        });
+      } else {
+        res.status(401).send("Senha incorreta.");
+      }
+    } else {
+      res.status(401).send("Usuário não encontrado.");
+    }
+  });
+});
+
+app.get("/usuarios", function (req, res) {
+  const sql = `
+        SELECT u.idUsu, u.nomeUsu, u.emailUsu, n.nomeNivel 
+        FROM rac_usuarios u
+        INNER JOIN rac_niveis n ON u.nivelAcessoUsu = n.idNivel
+    `;
+
+  conexao.query(sql, function (erro, lista) {
+    if (erro) res.status(500).json(erro);
+    else res.send(lista);
+  });
+});
+
+// ROTA PARA CADASTRAR USUÁRIO COM CRIPTOGRAFIA
+const bcrypt = require("bcrypt");
+app.post("/usuario", async function (req, res) {
+  const { nome, email, senha, nivel } = req.body;
+  const hash = await bcrypt.hash(senha, 10);
+
+  const sql =
+    "INSERT INTO rac_usuarios (nomeUsu, emailUsu, senhaUsu, nivelAcessoUsu) VALUES (?, ?, ?, ?)";
+  conexao.query(sql, [nome, email, hash, nivel], function (erro, resultado) {
+    if (erro) res.status(500).json(erro);
+    else res.sendStatus(200);
+  });
+});
+
+// ROTA PARA DELETAR USUÁRIO
+app.delete("/usuario/:id", function (req, res) {
+  const id = req.params.id;
+  conexao.query(
+    "DELETE FROM rac_usuarios WHERE idUsu = ?",
+    [id],
+    function (erro, resultado) {
+      if (erro) res.status(500).json(erro);
+      else res.json({ mensagem: "Usuário removido" });
+    },
+  );
+});
+
 app.listen(3000, () => {
   console.log("Servidor rodando na porta 3000");
 });
