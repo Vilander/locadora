@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `usuarios`;
 
 DROP TABLE IF EXISTS `veiculos`;
 
--- Tabelas principais na ordem correta (filhas antes das mães)
+-- Tabelas principais na ordem correta
 DROP TABLE IF EXISTS `rac_agendamentos`;
 
 DROP TABLE IF EXISTS `rac_usuarios`;
@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS `rac_categoria`;
 DROP TABLE IF EXISTS `rac_niveis`;
 
 -- --------------------------------------------------------
--- Estrutura para tabela `rac_categoria` (Sufixo: Cat)
+-- Estrutura para tabela `rac_categoria`
 -- --------------------------------------------------------
 CREATE TABLE `rac_categoria` (
     `idCat` int(11) NOT NULL,
@@ -53,12 +53,12 @@ CREATE TABLE `rac_categoria` (
 
 INSERT INTO
     `rac_categoria` (`idCat`, `nomeCat`)
-VALUES (1, 'Básico'),
-    (2, 'Família'),
+VALUES (1, 'Basico'),
+    (2, 'Familia'),
     (3, 'Luxo');
 
 -- --------------------------------------------------------
--- Estrutura para tabela `rac_niveis` (Sufixo: Niv)
+-- Estrutura para tabela `rac_niveis`
 -- --------------------------------------------------------
 CREATE TABLE `rac_niveis` (
     `idNiv` int(11) NOT NULL,
@@ -71,7 +71,7 @@ VALUES (1, 'Administrador'),
     (2, 'Operador');
 
 -- --------------------------------------------------------
--- Estrutura para tabela `rac_veiculos` (Sufixo: Vei)
+-- Estrutura para tabela `rac_veiculos`
 -- --------------------------------------------------------
 CREATE TABLE `rac_veiculos` (
     `idVei` int(11) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `rac_veiculos` (
     `placaVei` varchar(10) NOT NULL,
     `idCatVei` int(11) NOT NULL,
     `diariaVei` decimal(10, 2) NOT NULL,
-    `statusVei` varchar(20) DEFAULT 'Disponível'
+    `statusVei` varchar(20) DEFAULT 'Disponivel'
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 INSERT INTO
@@ -100,7 +100,7 @@ VALUES (
         'ABC1A23',
         1,
         99.00,
-        'Disponível'
+        'Disponivel'
     ),
     (
         2,
@@ -109,7 +109,7 @@ VALUES (
         'DEF4B56',
         2,
         150.00,
-        'Disponível'
+        'Disponivel'
     ),
     (
         3,
@@ -118,7 +118,7 @@ VALUES (
         'GHI7C89',
         3,
         299.00,
-        'Disponível'
+        'Disponivel'
     ),
     (
         4,
@@ -127,11 +127,11 @@ VALUES (
         'ABX1234',
         1,
         120.00,
-        'Disponível'
+        'Disponivel'
     );
 
 -- --------------------------------------------------------
--- Estrutura para tabela `rac_agendamentos` (Sufixo: Age)
+-- Estrutura para tabela `rac_agendamentos`
 -- --------------------------------------------------------
 CREATE TABLE `rac_agendamentos` (
     `idAge` int(11) NOT NULL,
@@ -165,31 +165,35 @@ VALUES (
     );
 
 -- --------------------------------------------------------
--- Estrutura para tabela `rac_usuarios` (Sufixo: Usu)
+-- Estrutura para tabela `rac_usuarios`
 -- --------------------------------------------------------
 CREATE TABLE `rac_usuarios` (
     `idUsu` int(11) NOT NULL,
-    `loginUsu` varchar(50) NOT NULL,
+    `nomeUsu` varchar(100) NOT NULL,
+    `emailUsu` varchar(50) NOT NULL,
     `senhaUsu` varchar(255) NOT NULL,
-    `nivelAcessoUsu` int(11) NOT NULL
+    `nivelAcessoUsu` int(2) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 INSERT INTO
     `rac_usuarios` (
         `idUsu`,
-        `loginUsu`,
+        `nomeUsu`,
+        `emailUsu`,
         `senhaUsu`,
         `nivelAcessoUsu`
     )
 VALUES (
         1,
-        'admin',
+        'Administrador',
+        'admin@admin.com',
         '$2a$12$NWX7UKteZWlEhqVypk0jV.Pm4QKeQO6puGe.RMZqTRxpxmpbCNEBO',
         1
     ),
     (
         2,
-        'operador',
+        'Operador',
+        'operador@email.com',
         '$2b$10$f8n4xcCr9..LxMUqVtku1OrUX8GgPkdCXwc3qsrr54XZkIaMCATI2',
         2
     );
@@ -212,7 +216,7 @@ ADD KEY `fk_age_vei` (`veiculoAge`);
 
 ALTER TABLE `rac_usuarios`
 ADD PRIMARY KEY (`idUsu`),
-ADD UNIQUE KEY `loginUsu` (`loginUsu`),
+ADD UNIQUE KEY `emailUsu` (`emailUsu`),
 ADD KEY `fk_usu_niv` (`nivelAcessoUsu`);
 
 -- --------------------------------------------------------

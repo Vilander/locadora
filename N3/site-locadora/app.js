@@ -1,4 +1,3 @@
-// 1. Busca as categorias no banco e preenche o <select>
 function fnCarregarCategorias() {
   fetch("http://localhost:3000/site-locadora/home")
     .then((resposta) => resposta.json())
@@ -8,7 +7,8 @@ function fnCarregarCategorias() {
       select.innerHTML = '<option value="">Selecione a categoria...</option>';
 
       dados.forEach((categoria) => {
-        select.innerHTML += `<option value="${categoria.idCat}">${categoria.nomeCat}</option>`;
+        // Agora passando o nomeCat como value, pois o seu backend filtra pelo nome
+        select.innerHTML += `<option value="${categoria.nomeCat}">${categoria.nomeCat}</option>`;
       });
     })
     .catch((erro) =>
@@ -16,7 +16,6 @@ function fnCarregarCategorias() {
     );
 }
 
-// 2. Função para salvar agendamento
 function fnSalvarAgendamento() {
   const nome = document.getElementById("nome").value;
   const email = document.getElementById("email").value;
@@ -28,11 +27,13 @@ function fnSalvarAgendamento() {
     return;
   }
 
-  // Primeiro, buscar um veículo disponível da categoria selecionada
   fetch(`http://localhost:3000/site-locadora/showroom?categoria=${categoria}`)
     .then((res) => res.json())
     .then((veiculos) => {
-      const veiculoDisponivel = veiculos.find((v) => v.status === "Disponível");
+      // Ajuste para verificar statusVei
+      const veiculoDisponivel = veiculos.find(
+        (v) => v.statusVei === "Disponivel",
+      );
       if (!veiculoDisponivel) {
         alert("Nenhum veículo disponível nesta categoria!");
         return;
@@ -41,7 +42,7 @@ function fnSalvarAgendamento() {
       const agendamento = {
         nome_cliente: nome,
         email_cliente: email,
-        veiculo_id: veiculoDisponivel.id,
+        veiculo_id: veiculoDisponivel.idVei, // Pegando o ID do veículo correto
         data_reserva: data_reserva,
       };
 
@@ -60,7 +61,6 @@ function fnSalvarAgendamento() {
         })
         .then((resultado) => {
           alert("Agendamento realizado com sucesso!");
-          // Redirecionar para showroom
           window.location.href = `showroom.html?categoria=${categoria}`;
         })
         .catch((erro) => {
@@ -72,17 +72,13 @@ function fnSalvarAgendamento() {
     });
 }
 
-// 3. Redireciona para o showroom filtrado pela categoria selecionada (para consultar sem agendar)
 function fnIrParaShowroom() {
-  const idCat = document.getElementById("veiculo").value;
-
-  if (idCat == "") {
+  const cat = document.getElementById("veiculo").value;
+  if (cat == "") {
     alert("Por favor, selecione uma categoria de veículo!");
     return;
   }
-
-  // Redireciona para o showroom com o parametro de categoria
-  window.location.href = `showroom.html?categoria=${idCat}`;
+  window.location.href = `showroom.html?categoria=${cat}`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -90,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 let btnReservar = document.getElementById("btn-reservar");
-btnReservar.addEventListener("click", () => {
-  fnSalvarAgendamento();
-});
+if (btnReservar) {
+  btnReservar.addEventListener("click", () => {
+    fnSalvarAgendamento();
+  });
+}

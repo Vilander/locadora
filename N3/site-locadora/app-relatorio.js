@@ -39,7 +39,7 @@ function fnCarregarRelatorio() {
 function fnMontarLinhaRelatorio(item) {
   let linha = `
      <tr>
-        <td>${item.categoria}</td>
+        <td>${item.nomeCat}</td>
         <td>${item.total_reservas}</td>
     </tr>`;
   document.querySelector(".corpo_relatorio").innerHTML += linha;

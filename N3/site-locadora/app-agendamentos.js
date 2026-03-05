@@ -1,15 +1,12 @@
 function fnChecarAcesso() {
   const estaLogado = localStorage.getItem("logado");
-
   if (estaLogado !== "true") {
     alert("Acesso restrito! Por favor, identifique-se.");
     window.location.href = "login.html";
   }
 }
-
 fnChecarAcesso();
 
-// 1. Configuração Inicial
 document.addEventListener("DOMContentLoaded", () => {
   fnListarAgendamentos();
 
@@ -24,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 2. Função de Listar
 function fnListarAgendamentos() {
   fetch("http://localhost:3000/site-locadora/agendamentos")
     .then((resposta) => resposta.json())
@@ -37,16 +33,15 @@ function fnListarAgendamentos() {
     });
 }
 
-// 3. Função de Montar a Tabela (Visual)
 function fnMontarLinhaAgendamento(agendamento) {
   let linha = `
      <tr>
-        <td>${agendamento.nome_cliente}</td>
-        <td>${agendamento.email_cliente}</td>
-        <td>${agendamento.marca} ${agendamento.modelo} (${agendamento.placa})</td>
-        <td>${new Date(agendamento.data_reserva).toLocaleDateString("pt-BR")}</td>
+        <td>${agendamento.clienteAge}</td>
+        <td>${agendamento.emailAge}</td>
+        <td>${agendamento.marcaVei} ${agendamento.modeloVei} (${agendamento.placaVei})</td>
+        <td>${new Date(agendamento.dataAge).toLocaleDateString("pt-BR")}</td>
         <td class="text-center">
-            <button class="btn btn-danger btn-sm" onclick="fnConfirmarCancelamento(${agendamento.id})">
+            <button class="btn btn-danger btn-sm" onclick="fnConfirmarCancelamento(${agendamento.idAge})">
                 <i class="bi bi-x-circle"></i> Cancelar
             </button>
         </td>
@@ -54,7 +49,6 @@ function fnMontarLinhaAgendamento(agendamento) {
   document.querySelector(".corpo_tabelaAgendamento").innerHTML += linha;
 }
 
-// 4. Função de Cancelar
 function fnConfirmarCancelamento(id) {
   if (confirm("Deseja realmente cancelar este agendamento?")) {
     fetch(`http://localhost:3000/site-locadora/agendamento/${id}`, {

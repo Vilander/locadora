@@ -11,7 +11,7 @@ fnChecarAcesso();
 
 // 1. Configuração Inicial
 document.addEventListener("DOMContentLoaded", () => {
-  fnListarUsuarios();
+  fnListarUsuarios(); // Agora essa função existe de verdade!
 
   const form = document.getElementById("formulario_cadUsuario");
   const botaoCadUsuario = document.getElementById("botao_cadUsuario");
@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     fnCadastrarUsuario();
   });
+
   const btnSair = document.getElementById("btn-sair");
   if (btnSair) {
     btnSair.addEventListener("click", () => {
@@ -36,8 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 2. Função de Cadastrar
 function fnCadastrarUsuario() {
+  // Pegamos o valor do input de login para usar como Nome e E-mail,
+  // já que o backend exige os dois para preencher a tabela rac_usuarios
+  const valorLogin = document.getElementById("cadastroNomeUsuario").value;
+
   let formDadosUsuario = {
-    login: document.getElementById("cadastroNomeUsuario").value,
+    nome: valorLogin,
+    email: valorLogin,
     senha: document.getElementById("cadastroSenhaUsuario").value,
     nivel_acesso: document.getElementById("cadastroNivelAcessoUsuario").value,
   };
@@ -51,12 +57,14 @@ function fnCadastrarUsuario() {
       if (resposta.ok) {
         alert("Usuário cadastrado com sucesso!");
         window.location.reload();
+      } else {
+        alert("Erro ao cadastrar usuário. Verifique se o login já existe.");
       }
     })
     .catch((erro) => alert("Erro ao cadastrar: " + erro.message));
 }
 
-// 3. Função de Listar
+// 3. Função de Listar (Restaurada)
 function fnListarUsuarios() {
   fetch("http://localhost:3000/usuarios")
     .then((resposta) => resposta.json())
@@ -71,10 +79,10 @@ function fnListarUsuarios() {
 function fnMontarLinhaUsuario(usuario) {
   let linha = `
      <tr>
-        <td>${usuario.login}</td>
-        <td>${usuario.nivel_acesso}</td>
+        <td>${usuario.emailUsu}</td>
+        <td>${usuario.nivelAcessoUsu == 1 ? "Admin" : "Operador"}</td>
         <td>
-            <button class="btn btn-danger btn-sm" onclick="fnConfirmarDelecao(${usuario.id})">
+            <button class="btn btn-danger btn-sm" onclick="fnConfirmarDelecao(${usuario.idUsu})">
                 <i class="bi bi-trash"></i> Deletar
             </button>
         </td>

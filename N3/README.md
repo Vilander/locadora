@@ -22,11 +22,6 @@ Página de locadora de veículos implementando funcionalidades avançadas de Ren
 
 ## Estrutura do Banco de Dados
 
-### Tabelas
-- `veiculos`: id, modelo, marca, placa, categoria, valor_diaria, status
-- `agendamentos`: id, nome_cliente, email_cliente, veiculo_id, data_reserva
-- `usuarios`: id, login, senha (criptografada), nivel_acesso
-
 ## Como Executar
 
 1. Instalar dependências: `npm install`

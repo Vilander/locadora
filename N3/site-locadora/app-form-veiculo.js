@@ -13,12 +13,9 @@ function fnAlterarFoto() {
 
 function fnLimparCampos() {
   document.getElementById("form-veiculos").reset();
-  // Volta a imagem de fundo para a padrão após limpar o form
   document.getElementById("fundo-imagem").style.backgroundImage =
     `url('../imagens/renault-kwid.png')`;
 }
-
-//========================toast===================================//
 
 function fnMensagemSalvar() {
   let toastElList = [].slice.call(document.querySelectorAll(".toast"));
@@ -28,16 +25,15 @@ function fnMensagemSalvar() {
   toastList.forEach((toast) => toast.show());
 }
 
-//===================////===================////===================//
-
 function fnCadastrarVeiculo() {
+  // Ajustado para bater exatamente com as colunas do banco
   let formDados = {
-    modelo: document.getElementById("modeloVeic").value,
-    marca: document.getElementById("marcaVeic").value,
-    placa: document.getElementById("placaVeic").value,
-    valor_diaria: document.getElementById("diariaVeic").value,
-    categoria: document.getElementById("categoriaVeic").value,
-    status: "Disponível",
+    modeloVei: document.getElementById("modeloVeic").value,
+    marcaVei: document.getElementById("marcaVeic").value,
+    placaVei: document.getElementById("placaVeic").value,
+    diariaVei: document.getElementById("diariaVeic").value,
+    idCatVei: document.getElementById("categoriaVeic").value,
+    statusVei: "Disponivel",
   };
 
   fetch("http://localhost:3000/site-locadora/veiculos", {

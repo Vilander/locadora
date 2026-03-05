@@ -10,9 +10,9 @@ document
 
     const dados = {
       nome: document.getElementById("cad_nome").value,
-      email: document.getElementById("cad_email").value, 
+      email: document.getElementById("cad_email").value,
       senha: document.getElementById("cad_senha").value,
-      nivel: 3, // Nível automático para novos clientes
+      nivel_acesso: 3, // Backend espera nivel_acesso
     };
 
     fetch("http://localhost:3000/usuario", {

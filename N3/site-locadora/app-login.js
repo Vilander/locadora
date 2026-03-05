@@ -1,4 +1,3 @@
-// 1. Configuração de Eventos ao Carregar a Página
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formulario_login");
   const botaoLogin = document.getElementById("botao_login");
@@ -8,15 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
       form.classList.add("was-validated");
       return;
     }
-
     fnVerificarLogin();
   });
 });
 
-// 2. Função de Verificação de Login
 function fnVerificarLogin() {
   const formLogin = {
-    login: document.getElementById("email_login").value, // Usando como login
+    email: document.getElementById("email_login").value, // Backend espera "email"
     senha: document.getElementById("senha_login").value,
   };
 
@@ -28,7 +25,6 @@ function fnVerificarLogin() {
     .then((resposta) => {
       if (resposta.status === 200) {
         localStorage.setItem("logado", "true");
-
         alert("Login realizado com sucesso!");
         window.location.href = "usuarios.html";
       } else if (resposta.status === 401) {

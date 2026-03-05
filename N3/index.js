@@ -49,9 +49,10 @@ app.post("/site-locadora/agendamento/", function (req, res) {
     return res.status(400).json({ erro: "Nome e e-mail são obrigatórios." });
   }
 
-  // Verificar conflitos de data/veículo
+  // Verificar conflitos de data/veículo usando os nomes atualizados das colunas
   const sqlConflito =
     "SELECT * FROM rac_agendamentos WHERE veiculoAge = ? AND dataAge = ?";
+
   conexao.query(
     sqlConflito,
     [veiculo_id, data_reserva],
@@ -66,7 +67,7 @@ app.post("/site-locadora/agendamento/", function (req, res) {
           .json({ erro: "Veículo já reservado para esta data." });
       }
 
-      // Inserir agendamento
+      // Inserir agendamento na tabela correta
       const sqlInsert =
         "INSERT INTO rac_agendamentos (clienteAge, emailAge, veiculoAge, dataAge) VALUES (?, ?, ?, ?)";
       conexao.query(
@@ -76,16 +77,6 @@ app.post("/site-locadora/agendamento/", function (req, res) {
           if (erro) {
             return res.status(500).json(erro);
           }
-
-          // Atualizar status do veículo para "Reservado"
-          const sqlUpdate =
-            "UPDATE rac_veiculos SET statusVei = 'Reservado' WHERE idVei = ?";
-          conexao.query(sqlUpdate, [veiculo_id], function (erro) {
-            if (erro) {
-              console.log("Erro ao atualizar status do veículo:", erro);
-            }
-          });
-
           res.send(resultado.insertId.toString());
         },
       );
@@ -93,16 +84,16 @@ app.post("/site-locadora/agendamento/", function (req, res) {
   );
 });
 
-//3. ROTA PARA BUSCAR OS VEÍCULOS (Showroom) - Filtrado por categoria
+// 3. ROTA PARA BUSCAR OS VEÍCULOS (Showroom) - Filtrado por categoria (Sem aliases de tabela)
 app.get("/site-locadora/showroom", function (req, res) {
   const categoria = req.query.categoria;
 
   let sql =
-    "SELECT v.*, c.nomeCat as categoriaVeic FROM rac_veiculos v INNER JOIN rac_categoria c ON v.idCatVei = c.idCat";
+    "SELECT rac_veiculos.*, rac_categoria.nomeCat FROM rac_veiculos INNER JOIN rac_categoria ON rac_veiculos.idCatVei = rac_categoria.idCat";
   let parametros = [];
 
   if (categoria && categoria !== "todas") {
-    sql += " WHERE c.nomeCat = ?";
+    sql += " WHERE rac_categoria.nomeCat = ?";
     parametros.push(categoria);
   }
 
@@ -121,25 +112,26 @@ app.get("/site-locadora/showroom", function (req, res) {
 // ROTA PARA CADASTRAR VEÍCULO (Formulário de cadastro)
 app.post("/site-locadora/veiculos", function (req, res) {
   const data = req.body;
+  // ATENÇÃO: Os campos enviados no 'req.body' (ex: data.modeloVei, data.placaVei)
+  // precisam ter exatamente os mesmos nomes das colunas no banco.
 
   conexao.query(
-    "INSERT INTO rac_veiculos set ?",
+    "INSERT INTO rac_veiculos SET ?",
     [data],
     function (erro, resultado) {
       if (erro) {
         console.log("Erro ao cadastrar veículo:", erro);
         return res.status(500).json(erro);
       }
-
       res.send(resultado.insertId.toString());
     },
   );
 });
 
-// ROTA PARA LISTAR VEÍCULOS (Estoque)
+// ROTA PARA LISTAR VEÍCULOS (Estoque) - Sem aliases de tabela
 app.get("/site-locadora/veiculos", function (req, res) {
   const sql =
-    "SELECT v.*, c.nomeCat as categoriaVeic FROM rac_veiculos v INNER JOIN rac_categoria c ON v.idCatVei = c.idCat";
+    "SELECT rac_veiculos.*, rac_categoria.nomeCat FROM rac_veiculos INNER JOIN rac_categoria ON rac_veiculos.idCatVei = rac_categoria.idCat";
   conexao.query(sql, function (erro, lista) {
     if (erro) res.status(500).json(erro);
     else res.send(lista);
@@ -159,12 +151,12 @@ app.delete("/site-locadora/agendamento/:id", function (req, res) {
   );
 });
 
-// ROTA PARA LISTAR AGENDAMENTOS
+// ROTA PARA LISTAR AGENDAMENTOS - Sem aliases de tabela
 app.get("/site-locadora/agendamentos", function (req, res) {
   const sql = `
-    SELECT a.*, v.modeloVei, v.marcaVei, v.placaVei
-    FROM rac_agendamentos a
-    INNER JOIN rac_veiculos v ON a.veiculoAge = v.idVei
+    SELECT rac_agendamentos.*, rac_veiculos.modeloVei, rac_veiculos.marcaVei, rac_veiculos.placaVei
+    FROM rac_agendamentos
+    INNER JOIN rac_veiculos ON rac_agendamentos.veiculoAge = rac_veiculos.idVei
   `;
   conexao.query(sql, function (erro, lista) {
     if (erro) res.status(500).json(erro);
@@ -172,15 +164,18 @@ app.get("/site-locadora/agendamentos", function (req, res) {
   });
 });
 
-//login
+// ==========================================
+// ROTAS DE USUÁRIO E LOGIN
+// ==========================================
 
-// ROTA DE LOGIN (User Story 4)
 const bcrypt = require("bcrypt");
-app.post("/login", function (req, res) {
-  const { login, senha } = req.body;
 
-  const sql = "SELECT * FROM rac_usuarios WHERE loginUsu = ?";
-  conexao.query(sql, [login], async function (erro, resultados) {
+// ROTA DE LOGIN (User Story 4) - Atualizada para usar emailUsu no lugar de loginUsu
+app.post("/login", function (req, res) {
+  const { email, senha } = req.body;
+
+  const sql = "SELECT * FROM rac_usuarios WHERE emailUsu = ?";
+  conexao.query(sql, [email], async function (erro, resultados) {
     if (erro) return res.status(500).json(erro);
 
     if (resultados.length > 0) {
@@ -190,7 +185,8 @@ app.post("/login", function (req, res) {
       if (senhaValida) {
         res.status(200).json({
           id: usuario.idUsu,
-          login: usuario.loginUsu,
+          nome: usuario.nomeUsu,
+          email: usuario.emailUsu,
           nivel: usuario.nivelAcessoUsu,
         });
       } else {
@@ -202,9 +198,10 @@ app.post("/login", function (req, res) {
   });
 });
 
+// ROTA PARA BUSCAR USUÁRIOS
 app.get("/usuarios", function (req, res) {
   conexao.query(
-    "SELECT idUsu, loginUsu, nivelAcessoUsu FROM rac_usuarios",
+    "SELECT idUsu, nomeUsu, emailUsu, nivelAcessoUsu FROM rac_usuarios",
     function (erro, lista) {
       if (erro) res.status(500).json(erro);
       else res.send(lista);
@@ -214,15 +211,19 @@ app.get("/usuarios", function (req, res) {
 
 // ROTA PARA CADASTRAR USUÁRIO COM CRIPTOGRAFIA
 app.post("/usuario", async function (req, res) {
-  const { login, senha, nivel_acesso } = req.body;
+  const { nome, email, senha, nivel_acesso } = req.body;
   const hash = await bcrypt.hash(senha, 10);
 
   const sql =
-    "INSERT INTO rac_usuarios (loginUsu, senhaUsu, nivelAcessoUsu) VALUES (?, ?, ?)";
-  conexao.query(sql, [login, hash, nivel_acesso], function (erro, resultado) {
-    if (erro) res.status(500).json(erro);
-    else res.sendStatus(200);
-  });
+    "INSERT INTO rac_usuarios (nomeUsu, emailUsu, senhaUsu, nivelAcessoUsu) VALUES (?, ?, ?, ?)";
+  conexao.query(
+    sql,
+    [nome, email, hash, nivel_acesso],
+    function (erro, resultado) {
+      if (erro) res.status(500).json(erro);
+      else res.sendStatus(200);
+    },
+  );
 });
 
 // ROTA PARA DELETAR USUÁRIO
@@ -238,14 +239,14 @@ app.delete("/usuario/:id", function (req, res) {
   );
 });
 
-// ROTA PARA RELATÓRIO DE CATEGORIAS MAIS PROCURADAS
+// ROTA PARA RELATÓRIO DE CATEGORIAS MAIS PROCURADAS - Sem aliases
 app.get("/site-locadora/relatorio", function (req, res) {
   const sql = `
-    SELECT c.nomeCat, COUNT(a.idAge) as total_reservas
-    FROM rac_veiculos v
-    LEFT JOIN rac_agendamentos a ON v.idVei = a.veiculoAge
-    INNER JOIN rac_categoria c ON v.idCatVei = c.idCat
-    GROUP BY c.nomeCat
+    SELECT rac_categoria.nomeCat, COUNT(rac_agendamentos.idAge) as total_reservas
+    FROM rac_veiculos
+    LEFT JOIN rac_agendamentos ON rac_veiculos.idVei = rac_agendamentos.veiculoAge
+    INNER JOIN rac_categoria ON rac_veiculos.idCatVei = rac_categoria.idCat
+    GROUP BY rac_categoria.nomeCat
     ORDER BY total_reservas DESC
   `;
   conexao.query(sql, function (erro, lista) {
