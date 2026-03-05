@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Painel Admin - Locadora</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+
+    <link rel="stylesheet" href="style-admin.css" />
+  </head>
+
+  <body>
+    <header
+      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
+    >
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#"
+        >Locadora de Veículos</a
+      >
+      <button
+        class="navbar-toggler position-absolute d-md-none collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu"
+        aria-controls="sidebarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="/site-locadora/login.html">Sair</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+          style="min-height: 100vh"
+        >
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">
+                  <i class="bi bi-car-front me-2"></i>
+                  Veículos
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="bi bi-calendar-check me-2"></i>
+                  Agendamentos
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="bi bi-people me-2"></i>
+                  Usuários
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 class="h2">Detalhes do Veículo</h1>
+          </div>
+
+          <div class="container mt-5">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <img
+                  src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxjYXJ8ZW58MHwwfHx8MTcxMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080"
+                  alt="Foto do Veículo"
+                  class="img-fluid rounded mb-3 product-image shadow-sm"
+                  id="foto-veiculo"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <h2 id="modelo-veiculo" class="mb-2">Chevrolet Onix</h2>
+                <h5 id="marca-veiculo" class="text-muted mb-4">Chevrolet</h5>
+
+                <div class="d-flex gap-3 mb-3">
+                  <span class="badge bg-primary fs-6" id="categoria-veiculo"
+                    >Básico</span
+                  >
+                  <span class="badge bg-secondary fs-6" id="placa-veiculo"
+                    >Placa: ABC1A23</span
+                  >
+                </div>
+
+                <div class="mb-3 mt-4">
+                  <span class="text-muted">Valor da diária:</span><br />
+                  <span id="diaria-veiculo" class="h3 text-success me-2"
+                    >R$ 120,00</span
+                  >
+                </div>
+
+                <div id="avaliacao-veiculo" class="mb-3">
+                  <i class="bi bi-star-fill text-warning"></i>
+                  <i class="bi bi-star-fill text-warning"></i>
+                  <i class="bi bi-star-fill text-warning"></i>
+                  <i class="bi bi-star-fill text-warning"></i>
+                  <i class="bi bi-star-half text-warning"></i>
+                  <span class="ms-2">4.5</span>
+                </div>
+
+                <p id="descricao-veiculo" class="mb-4">
+                  Veículo econômico e confortável, ideal para o dia a dia na
+                  cidade. Conta com ar-condicionado, direção elétrica e sistema
+                  multimídia completo.
+                </p>
+
+                <div class="d-flex gap-2">
+                  <button class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Editar Veículo
+                  </button>
+                  <button class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Excluir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="app-veiculo.js"></script>
+  </body>
+</html>

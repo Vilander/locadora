@@ -8,7 +8,7 @@ function fnCarregarVeiculos() {
       select.innerHTML = '<option value="">Selecione o veículo...</option>';
 
       dados.forEach((veiculo) => {
-        select.innerHTML += `<option value="${veiculo.idVeic}">${veiculo.categoriaVeic} - ${veiculo.modeloVeic}</option>`;
+        select.innerHTML += `<option value="${veiculo.idVeic}">${veiculo.categoriaVeic}</option>`;
       });
     })
     .catch((erro) => console.log("Erro ao carregar veículos: " + erro.message));

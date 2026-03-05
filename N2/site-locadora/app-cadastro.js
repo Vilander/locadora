@@ -10,7 +10,7 @@ document
 
     const dados = {
       nome: document.getElementById("cad_nome").value,
-      email: document.getElementById("cad_email").value, // Será salvo em loginUsu
+      email: document.getElementById("cad_email").value, 
       senha: document.getElementById("cad_senha").value,
       nivel: 3, // Nível automático para novos clientes
     };

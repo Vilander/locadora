@@ -251,3 +251,22 @@ body {
     color: #434343;
     margin-top: 10px;
 }
+
+.avisoAtencao {
+    font-size: 25px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.cadVeiculo {
+    background-color: #d9ae00;
+}
+
+#cardVeic:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}

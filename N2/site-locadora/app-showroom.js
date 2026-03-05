@@ -5,8 +5,8 @@ function fnMontarCardVeiculo(veiculo) {
       : "https://via.placeholder.com/300x200?text=Sem+Foto";
 
   let cartao = `
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
+        <div  class="col-12 col-sm-12 col-md-6 col-lg-4 mb-4">
+            <div id="cardVeic" class="card h-100 shadow-sm">
                 <img src="${imagem}" class="card-img-top" alt="${veiculo.modeloVeic}">
                 <div class="card-body">
                     <h5 class="card-title">${veiculo.marcaVeic} ${veiculo.modeloVeic}</h5>
