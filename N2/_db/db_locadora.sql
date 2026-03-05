@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 03/03/2026 às 23:07
+-- Tempo de geração: 05/03/2026 às 02:10
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -85,7 +85,8 @@ CREATE TABLE `rac_usuarios` (
 --
 
 INSERT INTO `rac_usuarios` (`idUsu`, `nomeUsu`, `emailUsu`, `senhaUsu`, `nivelAcessoUsu`) VALUES
-(1, 'Administrador', 'admin@admin.com', '$2a$12$NWX7UKteZWlEhqVypk0jV.Pm4QKeQO6puGe.RMZqTRxpxmpbCNEBO', 1);
+(1, 'Administrador', 'admin@admin.com', '$2a$12$NWX7UKteZWlEhqVypk0jV.Pm4QKeQO6puGe.RMZqTRxpxmpbCNEBO', 1),
+(4, 'jose', 'jose@jose.com', '$2b$10$f8n4xcCr9..LxMUqVtku1OrUX8GgPkdCXwc3qsrr54XZkIaMCATI2', 3);
 
 -- --------------------------------------------------------
 
@@ -110,7 +111,8 @@ CREATE TABLE `rac_veiculos` (
 INSERT INTO `rac_veiculos` (`idVeic`, `modeloVeic`, `marcaVeic`, `placaVeic`, `categoriaVeic`, `diariaVeic`, `fotoVeic`) VALUES
 (1, 'Onix', 'Chevrolet', 'ABC1A23', 'Básico', 120, 'https://images.unsplash.com/photo-1459603677915-a62079ffd002?q=80&w=1234&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
 (2, 'Corolla', 'Toyota', 'DEF4B56', 'Família', 220, 'https://images.unsplash.com/photo-1459603677915-a62079ffd002?q=80&w=1234&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(3, 'BMW 320i', 'BMW', 'GHI7C89', 'Luxo', 450, 'https://images.unsplash.com/photo-1459603677915-a62079ffd002?q=80&w=1234&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+(3, 'BMW 320i', 'BMW', 'GHI7C89', 'Luxo', 450, 'https://images.unsplash.com/photo-1459603677915-a62079ffd002?q=80&w=1234&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(4, 'Fusca', 'VW', 'ABX1234', 'Básico', 200, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/VW_K%C3%A4fer%2C_Bj._1958_%282015-09-12_3727_b2%29.JPG/330px-VW_K%C3%A4fer%2C_Bj._1958_%282015-09-12_3727_b2%29.JPG');
 
 --
 -- Índices para tabelas despejadas
@@ -163,13 +165,13 @@ ALTER TABLE `rac_niveis`
 -- AUTO_INCREMENT de tabela `rac_usuarios`
 --
 ALTER TABLE `rac_usuarios`
-  MODIFY `idUsu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUsu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `rac_veiculos`
 --
 ALTER TABLE `rac_veiculos`
-  MODIFY `idVeic` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idVeic` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para tabelas despejadas
