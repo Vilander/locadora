@@ -270,3 +270,19 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
+#sidebarMenu {
+    background-color: #d9ae0052;
+    /* box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.5); */
+    padding: 2px;
+}
+
+.nav-veic {
+    margin: auto 30px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.navtop {
+    box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.062);
+}

@@ -82,19 +82,19 @@ app.get("/site-locadora/showroom", function (req, res) {
 });
 
 // ROTA PARA CADASTRAR VEÍCULO (Formulário de cadastro)
-app.post("/cadastrar-veiculo/", function (req, res) {
-  const data = req.body;
-  conexao.query(
-    `INSERT INTO rac_veiculos set ?`,
-    [data],
-    function (erro, resultado) {
-      if (erro) {
-        res.json(erro);
-      }
-      res.send(resultado.insertId);
-    },
-  );
-});
+// app.post("/cadastrar-veiculo/", function (req, res) {
+//   const data = req.body;
+//   conexao.query(
+//     `INSERT INTO rac_veiculos set ?`,
+//     [data],
+//     function (erro, resultado) {
+//       if (erro) {
+//         res.json(erro);
+//       }
+//       res.send(resultado.insertId);
+//     },
+//   );
+// });
 
 // ROTA PARA CADASTRAR VEÍCULO (Formulário de cadastro)
 app.post("/site-locadora/veiculos", function (req, res) {
