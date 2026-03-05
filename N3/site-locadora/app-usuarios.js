@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnSair) {
     btnSair.addEventListener("click", () => {
       if (confirm("Deseja realmente encerrar sua sessão?")) {
-        localStorage.removeItem("logado"); 
-        window.location.href = "login.html"; 
+        localStorage.removeItem("logado");
+        window.location.href = "login.html";
       }
     });
   }
@@ -37,10 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // 2. Função de Cadastrar
 function fnCadastrarUsuario() {
   let formDadosUsuario = {
-    nome: document.getElementById("cadastroNomeUsuario").value,
-    email: document.getElementById("cadastroEmailUsuario").value,
+    login: document.getElementById("cadastroNomeUsuario").value,
     senha: document.getElementById("cadastroSenhaUsuario").value,
-    nivel: document.getElementById("cadastroNivelAcessoUsuario").value,
+    nivel_acesso: document.getElementById("cadastroNivelAcessoUsuario").value,
   };
 
   fetch("http://localhost:3000/usuario", {
@@ -72,10 +71,10 @@ function fnListarUsuarios() {
 function fnMontarLinhaUsuario(usuario) {
   let linha = `
      <tr>
-        <td>${usuario.nomeUsu}</td>
-        <td>${usuario.emailUsu}</td> <td>${usuario.nomeNivel}</td>
+        <td>${usuario.login}</td>
+        <td>${usuario.nivel_acesso}</td>
         <td>
-            <button class="btn btn-danger btn-sm" onclick="fnConfirmarDelecao(${usuario.idUsu})">
+            <button class="btn btn-danger btn-sm" onclick="fnConfirmarDelecao(${usuario.id})">
                 <i class="bi bi-trash"></i> Deletar
             </button>
         </td>

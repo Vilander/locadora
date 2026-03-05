@@ -29,15 +29,18 @@
 
             <form id="form-agendamento" class="pedido">
                 <label class="rotulo">Nome</label>
-                <input id="nome" type="text" class="campo-texto">
+                <input id="nome" type="text" class="campo-texto" required>
 
                 <label class="rotulo">E-mail</label>
-                <input id="email" type="text" class="campo-texto">
+                <input id="email" type="email" class="campo-texto" required>
 
                 <label class="rotulo">Selecione o tipo de veículo</label>
-                <select id="veiculo" class="campo-texto">
+                <select id="veiculo" class="campo-texto" required>
                     <option value="">Carregando opções...</option>
                 </select>
+
+                <label class="rotulo">Data da Reserva</label>
+                <input id="data_reserva" type="date" class="campo-texto" required>
 
                 <button type="button" id="btn-reservar" class="botao-reservar">FAZER MINHA RESERVA</button>
             </form>

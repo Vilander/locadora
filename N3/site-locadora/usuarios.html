@@ -23,6 +23,10 @@
                         Veículo</button></a>
                 <a href="estoque-veiculos.htm"><button class="btn btn-outline-secondary me-2" type="button">Gerenciar
                         Veículos</button></a>
+                <a href="agendamentos.html"><button class="btn btn-outline-secondary me-2" type="button">Gerenciar
+                        Agendamentos</button></a>
+                <a href="relatorio.html"><button class="btn btn-outline-secondary me-2"
+                        type="button">Relatório</button></a>
                 <button class="btn btn-success me-2" type="button">Gerenciar Usuários</button>
 
                 <button class="btn btn-outline-danger ms-auto" type="button" id="btn-sair">Sair</button>
@@ -47,8 +51,7 @@
             <table class="table table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">Nome do Usuário</th>
-                        <th scope="col">Login / Email</th>
+                        <th scope="col">Login</th>
                         <th scope="col">Nível de Acesso</th>
                         <th scope="col" class="text-center">Ações</th>
                     </tr>
@@ -69,12 +72,8 @@
                 <div class="modal-body">
                     <form class="row g-3 validar" id="formulario_cadUsuario" novalidate>
                         <div class="col-md-12">
-                            <label class="form-label">Nome Completo</label>
+                            <label class="form-label">Login</label>
                             <input type="text" class="form-control" id="cadastroNomeUsuario" required>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label">Login (E-mail)</label>
-                            <input type="email" class="form-control" id="cadastroEmailUsuario" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Senha</label>
@@ -84,9 +83,8 @@
                             <label class="form-label">Nível de Acesso</label>
                             <select class="form-select" id="cadastroNivelAcessoUsuario" required>
                                 <option selected disabled value="">Selecione</option>
-                                <option value="1">Administrador</option>
-                                <option value="2">Funcionário</option>
-                                <option value="3">Cliente</option>
+                                <option value="Admin">Administrador</option>
+                                <option value="Operador">Funcionário</option>
                             </select>
                         </div>
                     </form>

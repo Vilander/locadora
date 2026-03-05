@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 2. Função de Verificação de Login
 function fnVerificarLogin() {
   const formLogin = {
-    email: document.getElementById("email_login").value,
+    login: document.getElementById("email_login").value, // Usando como login
     senha: document.getElementById("senha_login").value,
   };
 

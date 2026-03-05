@@ -32,12 +32,12 @@ function fnMensagemSalvar() {
 
 function fnCadastrarVeiculo() {
   let formDados = {
-    modeloVeic: document.getElementById("modeloVeic").value,
-    marcaVeic: document.getElementById("marcaVeic").value,
-    placaVeic: document.getElementById("placaVeic").value,
-    diariaVeic: document.getElementById("diariaVeic").value,
-    idCat: document.getElementById("categoriaVeic").value,
-    fotoVeic: document.getElementById("fotoVeic").value,
+    modelo: document.getElementById("modeloVeic").value,
+    marca: document.getElementById("marcaVeic").value,
+    placa: document.getElementById("placaVeic").value,
+    valor_diaria: document.getElementById("diariaVeic").value,
+    categoria: document.getElementById("categoriaVeic").value,
+    status: "Disponível",
   };
 
   fetch("http://localhost:3000/site-locadora/veiculos", {

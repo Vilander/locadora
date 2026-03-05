@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Agendamentos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../estilo.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar mb-4">
+            <div class="container-fluid justify-content-start">
+                <a href="home.html"><button class="btn btn-outline-secondary me-2" type="button">Início</button></a>
+                <a href="showroom.html"><button class="btn btn-outline-secondary me-2" type="button">Nossos
+                        veículos</button></a>
+                <a href="cadastrarVeiculo.html"><button class="btn btn-outline-secondary me-2" type="button">+ Novo
+                        Veículo</button></a>
+                <a href="estoque-veiculos.htm"><button class="btn btn-outline-secondary me-2" type="button">Gerenciar
+                        Veículos</button></a>
+                <a href="usuarios.html"><button class="btn btn-outline-secondary me-2" type="button">Gerenciar
+                        Usuários</button></a>
+                <button class="btn btn-success me-2" type="button">Gerenciar Agendamentos</button>
+
+                <button class="btn btn-outline-danger ms-auto" type="button" id="btn-sair">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container shadow-sm bg-white p-4 rounded">
+        <div class="row mb-4 align-items-center">
+            <div class="col">
+                <h2><i class="bi bi-calendar-check me-2"></i>Gestão de Agendamentos</h2>
+                <p class="text-muted">Administre as reservas de veículos</p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Veículo</th>
+                        <th scope="col">Data Reserva</th>
+                        <th scope="col" class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="corpo_tabelaAgendamento">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="app-agendamentos.js"></script>
+</body>
+
+</html>
